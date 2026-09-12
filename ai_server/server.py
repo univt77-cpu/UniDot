@@ -20,6 +20,11 @@ LLAMA_URL = os.environ.get(
     "http://127.0.0.1:8080"
 ).rstrip("/")
 
+AI_API_KEY = os.environ.get(
+    "UNIDOT_AI_API_KEY",
+    ""
+)
+
 MODEL_NAME = os.environ.get(
     "UNIDOT_AI_MODEL",
     "Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q4_K_M"
@@ -42,15 +47,19 @@ def llama_chat(messages, temperature=0.7, max_tokens=512):
     data = json.dumps(payload).encode("utf-8")
 
     req = urllib.request.Request(
-        url,
-        data=data,
-        headers={
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        method="POST"
-    )
-
+    url,
+    data=data,
+    headers={
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        **(
+            {"Authorization": f"Bearer {AI_API_KEY}"}
+            if AI_API_KEY
+            else {}
+        ),
+    },
+    method="POST",
+)
     try:
         with urllib.request.urlopen(req, timeout=120) as response:
             result = json.loads(response.read().decode("utf-8"))
