@@ -56,7 +56,10 @@ LLAMA_URL = os.environ.get(
     "http://127.0.0.1:8080",
 ).rstrip("/")
 
-AI_URL = LLAMA_URL + "/v1/chat/completions"
+AI_URL = os.environ.get(
+    "UNIDOT_AI_URL",
+    "http://127.0.0.1:8090/v1/chat/completions",
+)
 HEALTH_URL = LLAMA_URL + "/health"
 
 DEFAULT_TIMEZONE = "Asia/Kathmandu"

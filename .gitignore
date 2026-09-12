@@ -16,3 +16,7 @@ tempCodeRunnerFile.py
 venv/
 *.log
 UniDot_1_3_Web/
+
+unidot_backup.py
+
+ai_server/server_backup.py
